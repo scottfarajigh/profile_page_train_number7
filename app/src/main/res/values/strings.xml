@@ -13,4 +13,6 @@
     <string name="alborzkaraj">Alborz,karaj </string>
     <string name="main_saveinformation">save information </string>
     <string name="editprofile_hint">Enter Your Full Name Here</string>
+    <string name="userName">HABIB FARAJI</string>
+    <string name="userBio"> BIO</string>
 </resources>
