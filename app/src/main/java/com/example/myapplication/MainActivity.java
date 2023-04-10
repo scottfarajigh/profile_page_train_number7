@@ -56,5 +56,60 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"UI/UX Skill selected",Toast.LENGTH_LONG).show();
             }
         });
+        RadioGroup radioGroup = findViewById(R.id.main_radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i){
+                    case R.id.main_tehran_rb:
+                        Toast.makeText(MainActivity.this,"you select TEHRAN",Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.main_alborz_rb:
+                        Toast.makeText(MainActivity.this,"you select ALBORZ",Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.main_gilan_rb:
+                        Toast.makeText(MainActivity.this,"you select GILAN",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        Button editProfileBtn = findViewById(R.id.main_editProfile_btn);
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,Activit_editProfile.class);
+                TextView userNameTv = findViewById(R.id.main_userName_tv);
+                intent.putExtra("userName",userNameTv.getText());
+
+                TextView userBioTv = findViewById(R.id.main_userBio_tv);
+                intent.putExtra("userBio",userBioTv.getText());
+                startActivityForResult(intent,2222);
+            }
+        });
+
+        Button viewWebBtn = findViewById(R.id.main_viewWev_btn);
+        viewWebBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://shahreketabonline.com"));
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2222 && resultCode == Activity.RESULT_OK && data != null){
+
+            String userName = data.getStringExtra("userName");
+            TextView textView = findViewById(R.id.main_userName_tv);
+            textView.setText(userName);
+
+            String userBio = data.getStringExtra("userBio");
+            TextView textView2 = findViewById(R.id.main_userBio_tv);
+            textView2.setText(userBio);
+
+        }
     }
 }
