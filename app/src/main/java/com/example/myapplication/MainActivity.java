@@ -20,108 +20,96 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_KEY_FUULNAME="fullName";
-    
-    ActivityResultLauncher<Intent> ActivityResulLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult activityResult) {
-            int result = activityResult.getResultCode();
-            Intent data = activityResult.getData();
-
-            if (result == Activity.RESULT_OK && data!=null) {
-                String fullName = data.getStringExtra(EXTRA_KEY_FUULNAME);
-                TextView textView=findViewById(R.id.main_fullName);
-                textView.setText(fullName);
-            }
-        }
-    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button saveInformationButton =findViewById(R.id.btn_main_saveInformation);
-        saveInformationButton.setOnClickListener(new View.OnClickListener() {
+        Button saveInformationBtn = findViewById(R.id.main_saveInformation_btn);
+        saveInformationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this,"User Clicked On Save Information Button",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this,"Informations Saved " , Toast.LENGTH_LONG).show();
             }
         });
-        CheckBox androidSkillCheckBox=findViewById(R.id.checkBox_main_android);
-        androidSkillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        CheckBox androidCb = findViewById(R.id.main_android_cb);
+        androidCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
-                    Toast.makeText(MainActivity.this,"Android Skill Is Checked!",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(MainActivity.this,"Android Skill Is not Checked!",Toast.LENGTH_LONG).show();
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(MainActivity.this,"Android Skill selected",Toast.LENGTH_LONG).show();
             }
         });
-        CheckBox deepSkillCheckBox=findViewById(R.id.checkBox_main_deepLearning);
-        deepSkillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        CheckBox seepLearningCb = findViewById(R.id.main_deepLearning_cb);
+        seepLearningCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
-                    Toast.makeText(MainActivity.this,"deepLearning Skill Is Checked!",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(MainActivity.this,"deepLearning Skill Is not Checked!",Toast.LENGTH_LONG).show();
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(MainActivity.this,"DeepLearning Skill selected",Toast.LENGTH_LONG).show();
             }
         });
-        CheckBox uiSkillCheckBox=findViewById(R.id.checkBox_main_ui);
-        uiSkillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        CheckBox uiCb = findViewById(R.id.main_ui_cb);
+        uiCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
-                    Toast.makeText(MainActivity.this,"ui/ux Skill Is Checked!",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(MainActivity.this,"ui/ux Skill Is not Checked!",Toast.LENGTH_LONG).show();
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(MainActivity.this,"UI/UX Skill selected",Toast.LENGTH_LONG).show();
             }
         });
-        RadioGroup radioGroup =findViewById(R.id.radioGroup_main);
+        RadioGroup radioGroup = findViewById(R.id.main_radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i){
-                    case R.id.rb_alborz:
-                        Toast.makeText(MainActivity.this,"Alborz Is Checked",Toast.LENGTH_LONG).show();
+                    case R.id.main_tehran_rb:
+                        Toast.makeText(MainActivity.this,"you select TEHRAN",Toast.LENGTH_LONG).show();
                         break;
-                    case R.id.rb_gilan:
-                        Toast.makeText(MainActivity.this,"Gilan Is Checked",Toast.LENGTH_LONG).show();
+                    case R.id.main_alborz_rb:
+                        Toast.makeText(MainActivity.this,"you select ALBORZ",Toast.LENGTH_LONG).show();
                         break;
-                        case R.id.rb_tehran:
-                        Toast.makeText(MainActivity.this,"Tehran Is Checked",Toast.LENGTH_LONG).show();
+                    case R.id.main_gilan_rb:
+                        Toast.makeText(MainActivity.this,"you select GILAN",Toast.LENGTH_LONG).show();
                 }
             }
         });
+
         Button editProfileBtn = findViewById(R.id.main_editProfile_btn);
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(MainActivity.this,EditProfileActivity.class);
-                TextView fullNametv = findViewById(R.id.main_fullName);
-                intent.putExtra(EXTRA_KEY_FUULNAME,fullNametv.getText());
-//             startActivityForResult(intent,1001);
-                ActivityResulLauncher.launch(intent);
-            }
+                Intent intent = new Intent(MainActivity.this,Activit_editProfile.class);
+                TextView userNameTv = findViewById(R.id.main_userName_tv);
+                intent.putExtra("userName",userNameTv.getText());
 
+                TextView userBioTv = findViewById(R.id.main_userBio_tv);
+                intent.putExtra("userBio",userBioTv.getText());
+                startActivityForResult(intent,2222);
+            }
         });
-        Button viewWebsite = findViewById(R.id.viewWeb_btn);
-        viewWebsite.setOnClickListener(new View.OnClickListener() {
+
+        Button viewWebBtn = findViewById(R.id.main_viewWev_btn);
+        viewWebBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(Intent.ACTION_VIEW, Uri.parse("https://7learn.com"));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://shahreketabonline.com"));
                 startActivity(intent);
             }
         });
     }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2222 && resultCode == Activity.RESULT_OK && data != null){
+
+            String userName = data.getStringExtra("userName");
+            TextView textView = findViewById(R.id.main_userName_tv);
+            textView.setText(userName);
+
+            String userBio = data.getStringExtra("userBio");
+            TextView textView2 = findViewById(R.id.main_userBio_tv);
+            textView2.setText(userBio);
+
+        }
+    }
 }
